@@ -1,0 +1,9 @@
+req\_i & input & 1 & Read or write request from host. If signal {\tt ack} raises in the next cyle the request has been served; otherwise {\tt req} should remain high until {\tt ack} raises. When {\tt ack} raises in response to a previous request, {\tt req} may keep high, or combinatorially lowered in the same cycle. If {\tt req} keeps high, a new request is being made to the current address {\tt addr}; if {\tt req} lowers, no new request is being made. Note that the new request is being made in parallel with acknowledging the previous request: pipelined operation. \\ \hline
+\rowcolor{iob-blue}
+addr\_i & input & USE\_CTRL+FE\_ADDR\_W-2 & Address from CPU or other user core, excluding the byte selection LSBs. \\ \hline
+wdata\_i & input & FE\_DATA\_W & Write data fom host. \\ \hline
+\rowcolor{iob-blue}
+wstrb\_i & input & 4 & Byte write strobe from host. \\ \hline
+rdata\_o & output & FE\_DATA\_W & Read data to host. \\ \hline
+\rowcolor{iob-blue}
+ack\_o & output & 1 & Acknowledge signal from cache: indicates that the last request has been served. The next request can be issued as soon as this signal raises, in the same clock cycle, or later after it becomes low. \\ \hline

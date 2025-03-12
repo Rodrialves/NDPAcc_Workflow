@@ -1,0 +1,25 @@
+axi\_araddr\_o & output & AXI\_ADDR\_W & Address read channel address. \\ \hline
+\rowcolor{iob-blue}
+axi\_arprot\_o & output & 3 & Address read channel protection type. Set to 000 if master output; ignored if slave input. \\ \hline
+axi\_arvalid\_o & output & 1 & Address read channel valid. \\ \hline
+\rowcolor{iob-blue}
+axi\_arready\_i & input & 1 & Address read channel ready. \\ \hline
+axi\_rdata\_i & input & AXI\_DATA\_W & Read channel data. \\ \hline
+\rowcolor{iob-blue}
+axi\_rresp\_i & input & 2 & Read channel response. \\ \hline
+axi\_rvalid\_i & input & 1 & Read channel valid. \\ \hline
+\rowcolor{iob-blue}
+axi\_rready\_o & output & 1 & Read channel ready. \\ \hline
+axi\_arid\_o & output & AXI\_ID\_W & Address read channel ID. \\ \hline
+\rowcolor{iob-blue}
+axi\_arlen\_o & output & AXI\_LEN\_W & Address read channel burst length. \\ \hline
+axi\_arsize\_o & output & 3 & Address read channel burst size. This signal indicates the size of each transfer in the burst. \\ \hline
+\rowcolor{iob-blue}
+axi\_arburst\_o & output & 2 & Address read channel burst type. \\ \hline
+axi\_arlock\_o & output & 2 & Address read channel lock type. \\ \hline
+\rowcolor{iob-blue}
+axi\_arcache\_o & output & 4 & Address read channel memory type. Set to 0000 if master output; ignored if slave input. \\ \hline
+axi\_arqos\_o & output & 4 & Address read channel quality of service. \\ \hline
+\rowcolor{iob-blue}
+axi\_rid\_i & input & AXI\_ID\_W & Read channel ID. \\ \hline
+axi\_rlast\_i & input & 1 & Read channel last word. \\ \hline

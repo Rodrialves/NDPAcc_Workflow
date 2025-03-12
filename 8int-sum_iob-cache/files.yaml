@@ -1,0 +1,38 @@
+# Define simulation version (change manually for each iteration)
+version: "v0.1"
+
+# IOb-cache source locations
+cache_location: "../iob_cache_V0.2/"
+sum_location: "../8int-sum/"
+sim_location: "../iob_cache_V0.2/hardware/simulation/src/"
+src_location: "../iob_cache_V0.2/hardware/src/"
+
+# Outputs
+sim_out: "memory_wrapper_tb"
+wave_out: "wave_memory"
+log_out: "log_memory"
+
+# Source files list
+src_files:
+  - "memory_wrapper_tb.v"
+  - "memory_wrapper.v"
+  - "../8int-sum/8int-sum.v"
+  - "../vector_ram/vec_ram.v"
+  - "../iob_cache_V0.2/hardware/src/iob_cache_iob.v"
+  - "../iob_cache_V0.2/hardware/src/iob_ram_sp_be.v"
+  - "../iob_cache_V0.2/hardware/src/iob_reg_re.v"
+  - "../iob_cache_V0.2/hardware/src/iob_cache_back_end.v"
+  - "../iob_cache_V0.2/hardware/src/iob_cache_front_end.v"
+  - "../iob_cache_V0.2/hardware/src/iob_cache_memory.v"
+  - "../iob_cache_V0.2/hardware/src/iob_reg_r.v"
+  - "../iob_cache_V0.2/hardware/src/iob_cache_onehot_to_bin.v"
+  - "../iob_cache_V0.2/hardware/src/iob_cache_read_channel.v"
+  - "../iob_cache_V0.2/hardware/src/iob_cache_replacement_policy.v"
+  - "../iob_cache_V0.2/hardware/src/iob_cache_write_channel.v"
+  - "../iob_cache_V0.2/hardware/src/iob_fifo_sync.v"
+  - "../iob_cache_V0.2/hardware/src/iob_ram_sp.v"
+  - "../iob_cache_V0.2/hardware/src/iob_ram_t2p.v"
+  - "../iob_cache_V0.2/hardware/src/iob_reg.v"
+  - "../iob_cache_V0.2/hardware/src/iob_asym_converter.v"
+  - "../iob_cache_V0.2/hardware/src/iob_counter.v"
+  - "../iob_cache_V0.2/hardware/src/iob_regfile_sp.v"

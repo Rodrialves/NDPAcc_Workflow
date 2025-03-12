@@ -1,0 +1,15 @@
+WTB\_EMPTY & R & 0 & 1 & 0 & Write-through buffer empty (1) or non-empty (0). \\ \hline
+\rowcolor{iob-blue}
+WTB\_FULL & R & 1 & 1 & 0 & Write-through buffer full (1) or non-full (0). \\ \hline
+RW\_HIT & R & 4 & 32 & 0 & Read and write hit counter. \\ \hline
+\rowcolor{iob-blue}
+RW\_MISS & R & 8 & 32 & 0 & Read and write miss counter. \\ \hline
+READ\_HIT & R & 12 & 32 & 0 & Read hit counter. \\ \hline
+\rowcolor{iob-blue}
+READ\_MISS & R & 16 & 32 & 0 & Read miss counter. \\ \hline
+WRITE\_HIT & R & 20 & 32 & 0 & Write hit counter. \\ \hline
+\rowcolor{iob-blue}
+WRITE\_MISS & R & 24 & 32 & 0 & Write miss counter. \\ \hline
+RST\_CNTRS & W & 28 & 1 & 0 & Reset read/write hit/miss counters by writing any value to this register. \\ \hline
+\rowcolor{iob-blue}
+INVALIDATE & W & 29 & 1 & 0 & Invalidate the cache data contents by writing any value to this register. \\ \hline

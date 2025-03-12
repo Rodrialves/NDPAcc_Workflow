@@ -1,0 +1,4 @@
+`define IOB_RAM_SP_HEXFILE "none"
+`define IOB_RAM_SP_DATA_W 8
+`define IOB_RAM_SP_ADDR_W 14
+`define IOB_RAM_SP_MEM_INIT_FILE_INT HEXFILE

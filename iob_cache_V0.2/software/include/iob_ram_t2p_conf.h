@@ -1,0 +1,9 @@
+#ifndef H_IOB_RAM_T2P_CONF_H
+#define H_IOB_RAM_T2P_CONF_H
+
+#define IOB_RAM_T2P_HEXFILE "none"
+#define IOB_RAM_T2P_ADDR_W 0
+#define IOB_RAM_T2P_DATA_W 0
+#define IOB_RAM_T2P_MEM_INIT_FILE_INT HEXFILE
+
+#endif // H_IOB_RAM_T2P_CONF_H

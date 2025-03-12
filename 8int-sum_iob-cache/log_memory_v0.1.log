@@ -1,0 +1,9 @@
+----------------------------
+Simulation Run on 2025-03-05 14:46:36 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: 00deadbeefcafebabe112233445566778899aabbccddeeff0011223344556677
+Read Data: abcdef0123456789fedcba9876543210aabbccddeeff112233445566778899aa
+Read Data: 112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00
+Test completed successfully.
+❌ Test Failed: Expected sum (00000024) NOT found!

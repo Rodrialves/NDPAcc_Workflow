@@ -1,0 +1,2 @@
+`define IOB_PRIO_ENC_W 21
+`define IOB_PRIO_ENC_MODE "LOW"

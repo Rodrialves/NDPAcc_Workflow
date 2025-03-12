@@ -1,0 +1,7 @@
+#ifndef H_IOB_PRIO_ENC_CONF_H
+#define H_IOB_PRIO_ENC_CONF_H
+
+#define IOB_PRIO_ENC_W 21
+#define IOB_PRIO_ENC_MODE "LOW"
+
+#endif // H_IOB_PRIO_ENC_CONF_H

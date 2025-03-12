@@ -1,0 +1,229 @@
+----------------------------
+Simulation Run on 2025-02-21 13:49:45 - Version: v0.1
+----------------------------
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-21 13:54:35 - Version: v0.1
+----------------------------
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-21 13:57:43 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-21 14:11:13 - Version: v0.1
+----------------------------
+----------------------------
+Simulation Run on 2025-02-24 09:57:00 - Version: v0.1
+----------------------------
+----------------------------
+Simulation Run on 2025-02-24 09:58:56 - Version: v0.1
+----------------------------
+----------------------------
+Simulation Run on 2025-02-24 10:06:14 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-24 15:44:58 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-24 16:15:02 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-24 16:15:27 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-24 16:46:09 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-24 18:29:37 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-24 18:31:07 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 220000 ticks.
+----------------------------
+Simulation Run on 2025-02-25 09:58:01 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Data mismatch!
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 310000 ticks.
+----------------------------
+Simulation Run on 2025-02-25 10:26:59 - Version: v0.1
+----------------------------
+----------------------------
+Simulation Run on 2025-02-25 11:23:18 - Version: v0.1
+----------------------------
+----------------------------
+Simulation Run on 2025-02-25 11:50:53 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: 00deadbeefcafebabe112233445566778899aabbccddeeff0011223344556677
+Read Partial Data: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Partial write mismatch!
+Read Full Word 2: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+ERROR: Full word read mismatch!
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 621000 ticks.
+----------------------------
+Simulation Run on 2025-02-25 12:00:01 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: 00deadbeefcafebabe112233445566778899aabbccddeeff0011223344556677
+Read Data: 00deadbeefcafebabe112233445566778899aabbccddeeff0011223344556677
+Read Data: 00deadbeefcafebabe112233445566778899aabbccddeeff0011223344556677
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 801000 ticks.
+----------------------------
+Simulation Run on 2025-02-25 12:02:34 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: 00deadbeefcafebabe112233445566778899aabbccddeeff0011223344556677
+Read Data: abcdef0123456789fedcba9876543210aabbccddeeff112233445566778899aa
+Read Data: 112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00
+Test completed successfully.
+** VVP Stop(0) **
+** Flushing output streams.
+** Current simulation time is 801000 ticks.
+----------------------------
+Simulation Run on 2025-02-25 12:04:29 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: 00deadbeefcafebabe112233445566778899aabbccddeeff0011223344556677
+Read Data: abcdef0123456789fedcba9876543210aabbccddeeff112233445566778899aa
+Read Data: 112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00
+Test completed successfully.
+❌ Test Failed: Expected sum (00000024) NOT found!
+----------------------------
+Simulation Run on 2025-02-26 13:10:24 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: 00deadbeefcafebabe112233445566778899aabbccddeeff0011223344556677
+Read Data: abcdef0123456789fedcba9876543210aabbccddeeff112233445566778899aa
+Read Data: 112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00
+Test completed successfully.
+✅ Test Passed: Expected sum (00000024) found!
+----------------------------
+Simulation Run on 2025-02-26 13:12:10 - Version: v0.1
+----------------------------
+VCD info: dumpfile memory_wrapper.vcd opened for output.
+Read Data: 00deadbeefcafebabe112233445566778899aabbccddeeff0011223344556677
+Read Data: abcdef0123456789fedcba9876543210aabbccddeeff112233445566778899aa
+Read Data: 112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00
+Test completed successfully.
+✅ Test Passed: Expected sum (00000024) found!

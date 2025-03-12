@@ -1,0 +1,30 @@
+axi\_awaddr\_o & output & AXI\_ADDR\_W & Address write channel address. \\ \hline
+\rowcolor{iob-blue}
+axi\_awprot\_o & output & 3 & Address write channel protection type. Set to 000 if master output; ignored if slave input. \\ \hline
+axi\_awvalid\_o & output & 1 & Address write channel valid. \\ \hline
+\rowcolor{iob-blue}
+axi\_awready\_i & input & 1 & Address write channel ready. \\ \hline
+axi\_wdata\_o & output & AXI\_DATA\_W & Write channel data. \\ \hline
+\rowcolor{iob-blue}
+axi\_wstrb\_o & output & AXI\_DATA\_W/8 & Write channel write strobe. \\ \hline
+axi\_wvalid\_o & output & 1 & Write channel valid. \\ \hline
+\rowcolor{iob-blue}
+axi\_wready\_i & input & 1 & Write channel ready. \\ \hline
+axi\_bresp\_i & input & 2 & Write response channel response. \\ \hline
+\rowcolor{iob-blue}
+axi\_bvalid\_i & input & 1 & Write response channel valid. \\ \hline
+axi\_bready\_o & output & 1 & Write response channel ready. \\ \hline
+\rowcolor{iob-blue}
+axi\_awid\_o & output & AXI\_ID\_W & Address write channel ID. \\ \hline
+axi\_awlen\_o & output & AXI\_LEN\_W & Address write channel burst length. \\ \hline
+\rowcolor{iob-blue}
+axi\_awsize\_o & output & 3 & Address write channel burst size. This signal indicates the size of each transfer in the burst. \\ \hline
+axi\_awburst\_o & output & 2 & Address write channel burst type. \\ \hline
+\rowcolor{iob-blue}
+axi\_awlock\_o & output & 2 & Address write channel lock type. \\ \hline
+axi\_awcache\_o & output & 4 & Address write channel memory type. Set to 0000 if master output; ignored if slave input. \\ \hline
+\rowcolor{iob-blue}
+axi\_awqos\_o & output & 4 & Address write channel quality of service. \\ \hline
+axi\_wlast\_o & output & 1 & Write channel last word flag. \\ \hline
+\rowcolor{iob-blue}
+axi\_bid\_i & input & AXI\_ID\_W & Write response channel ID. \\ \hline
