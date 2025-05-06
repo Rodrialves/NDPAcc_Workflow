@@ -1,5 +1,5 @@
 //Fronte-End
-`define IOB_ADDR_W 19
+`define IOB_ADDR_W 24
 `define IOB_WDATA_W 256
 `define IOB_RDATA_W 256
 //Back-End

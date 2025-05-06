@@ -1,27 +1,31 @@
+`include "constants.vh"
+
 module vec_ram (
-    input  clk_i,
-    input  en_i,
-    input  [31:0] we_i,    // 32-bit write enable (1 bit per byte)
-    input  [23:0] addr_i,   // 1024 locations (2^10 = 1024)
-    input  [255:0] d_i,    // 256-bit input data
-    output reg [255:0] d_o // 256-bit output data
+    input                        clk_i,
+    input                        en_i,
+    input       [`BE_STRB_W-1 :0] we_i,   // 8-bit write enable (1 bit per byte)
+    input       [`BE_ADDR_W-1 :0] addr_i, // 24-bit address, only lower 15 bits used
+    input       [`BE_DATA_W-1 :0] d_i,    // 64-bit input data (8 bytes)
+    output reg  [`BE_DATA_W-1 :0] d_o     // 64-bit output data (8 bytes)
 );
 
-    // 256-bit wide, 1024-depth memory (32 KB total)
-    reg [255:0] mem [1023:0]; 
+    // Memory: 32768 bytes total
+    reg [`BE_STRB_W-1 :0] mem [0:32767]; 
+
+    wire [14:0] byte_addr = addr_i[14:0]; // Use lower 15 bits for addressing
 
     integer i;
 
     always @(posedge clk_i) begin
         if (en_i) begin
-            // Write operation (if any bit in we_i is high)
-            for (i = 0; i < 32; i = i + 1) begin
-                if (we_i[i]) 
-                    mem[addr_i][(i*8) +: 8] <= d_i[(i*8) +: 8]; // Byte-wise write
+            // Write operation
+            for (i = 0; i < 8; i = i + 1) begin
+                if (we_i[7 - i]) 
+                    mem[byte_addr + i] <= d_i[((8-i)*8-1) -: 8];
             end
-
             // Read operation
-            d_o <= mem[addr_i];
+            d_o <= {mem[byte_addr+0], mem[byte_addr+1], mem[byte_addr+2], mem[byte_addr+3],
+                    mem[byte_addr+4], mem[byte_addr+5], mem[byte_addr+6], mem[byte_addr+7]};
         end
     end
 

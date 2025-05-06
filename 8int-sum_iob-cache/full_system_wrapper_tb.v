@@ -1,197 +1,135 @@
 `timescale 1ns/1ps
 
-module system_wrapper #(
-    // Parameterize address and data width for flexibility
-    parameter ADDR_W = 19,            // Address width (e.g., 19 bits for 512KB address space of 256-bit words)
-    parameter DATA_W = 256,           // Data width (e.g., 256-bit bus)
-    parameter STRB_W = DATA_W/8      // Write strobe width (32 for 256-bit data)
-)(
-    // Clock and reset
-    input  wire              clk,
-    input  wire              reset,      // Active-high asynchronous reset for bus and memory. (Active-low for accelerator internally)
-    // CPU-like interface (to be driven by testbench)
-    input  wire              cpu_valid,
-    input  wire [ADDR_W-1:0] cpu_addr,
-    input  wire [DATA_W-1:0] cpu_wdata,
-    input  wire [STRB_W-1:0] cpu_wstrb,
-    output wire [DATA_W-1:0] cpu_rdata,
-    output wire              cpu_rvalid,
-    output wire              cpu_ready,
-    // Accelerator control signals
-    input  wire              start,
-    input  wire [ADDR_W-1:0] input_addr,
-    input  wire [ADDR_W-1:0] output_addr,
-    input  wire [31:0]       N,
-    output wire              done,
-    // Debug/status outputs
-    output reg               error_flag
-);
+`include "constants.vh"
 
-    // Internal wires to connect between modules
-    // Bus controller <-> Accelerator (acc side)
-    wire              acc_valid;
-    wire [ADDR_W-1:0] acc_addr;
-    wire [DATA_W-1:0] acc_wdata;
-    wire [STRB_W-1:0] acc_wstrb;
-    wire [DATA_W-1:0] acc_rdata;
-    wire              acc_rvalid;
-    wire              acc_ready;
+module tb_system_wrapper;
 
-    // Bus controller <-> Memory wrapper (cache side)
-    wire              cache_valid;
-    wire [ADDR_W-1:0] cache_addr;
-    wire [DATA_W-1:0] cache_wdata;
-    wire [STRB_W-1:0] cache_wstrb;
-    wire [DATA_W-1:0] cache_rdata;
-    wire              cache_rvalid;
-    wire              cache_ready;
+    // Signals
+    reg              clk = 0;
+    reg              reset = 1;
+    reg              cpu_valid = 0;
+    reg  [`FE_ADDR_W-1:0] cpu_addr = 0;
+    reg  [`FE_DATA_W-1:0] cpu_wdata = 0;
+    reg  [`FE_STRB_W-1:0] cpu_wstrb = 0;
+    wire [`FE_DATA_W-1:0] cpu_rdata;
+    wire             cpu_rvalid;
+    wire             cpu_ready;
+    reg              start = 0;
+    reg  [`FE_ADDR_W-1:0] input_addr = 0;
+    reg  [`FE_ADDR_W-1:0] output_addr = 0;
+    reg  [31:0]      N = 0;
+    wire             done;
+    wire             error_flag;
 
-    // Invert reset for accelerator (convert active-high reset to active-low)
-    wire arst_i = reset;       // async reset for bus controller and memory (active high)
-    wire rst_n  = ~reset;      // synchronous reset for accelerator (active low)
+    // Variables for result checking
+    reg  [`FE_DATA_W-1:0] sum1, sum2;
 
-    // Instantiate the Bus Controller (arbiter between CPU and Accelerator)
-    bus_controller u_bus_ctrl (
-        // CPU side
-        .cpu_valid   (cpu_valid),
-        .cpu_addr    (cpu_addr),
-        .cpu_wdata   (cpu_wdata),
-        .cpu_wstrb   (cpu_wstrb),
-        .cpu_rdata   (cpu_rdata),
-        .cpu_rvalid  (cpu_rvalid),
-        .cpu_ready   (cpu_ready),
-        // Accelerator side
-        .acc_valid   (acc_valid),
-        .acc_addr    (acc_addr),
-        .acc_wdata   (acc_wdata),
-        .acc_wstrb   (acc_wstrb),
-        .acc_rdata   (acc_rdata),
-        .acc_rvalid  (acc_rvalid),
-        .acc_ready   (acc_ready),
-        // Memory (cache) side
-        .cache_valid (cache_valid),
-        .cache_addr  (cache_addr),
-        .cache_wdata (cache_wdata),
-        .cache_wstrb (cache_wstrb),
-        .cache_rdata (cache_rdata),
-        .cache_rvalid(cache_rvalid),
-        .cache_ready (cache_ready),
-        // Clock and reset
-        .clk_i       (clk),
-        .arst_i      (arst_i)
+    // Instantiate the system_wrapper
+    fs_wrapper uut (
+        .clk(clk),
+        .reset(reset),
+        .cpu_valid(cpu_valid),
+        .cpu_addr(cpu_addr),
+        .cpu_wdata(cpu_wdata),
+        .cpu_wstrb(cpu_wstrb),
+        .cpu_rdata(cpu_rdata),
+        .cpu_rvalid(cpu_rvalid),
+        .cpu_ready(cpu_ready),
+        .start(start),
+        .input_addr(input_addr),
+        .output_addr(output_addr),
+        .N(N),
+        .done(done),
+        .error_flag(error_flag)
     );
 
-    // Instantiate the Memory Wrapper (includes cache + RAM)
-    memory_wrapper u_mem_wrap (
-        // Front-end IOb bus interface (connected to bus controller's cache side)
-        .iob_valid_i (cache_valid),
-        .iob_addr_i  (cache_addr),
-        .iob_wdata_i (cache_wdata),
-        .iob_wstrb_i (cache_wstrb),
-        .iob_rdata_o (cache_rdata),
-        .iob_rvalid_o(cache_rvalid),
-        .iob_ready_o (cache_ready),
-        // Cache invalidate chain (not used in this test, tie inputs to safe values)
-        .invalidate_i(1'b0),         // no external invalidate
-        .invalidate_o(/* unconnected */),
-        .wtb_empty_i (1'b1),         // assume write buffer is empty (base of chain)
-        .wtb_empty_o (/* unconnected */),
-        // Clock and reset
-        .clk_i       (clk),
-        .arst_i      (arst_i)
-    );
+    // Clock generation (10ns period)
+    always #5 clk = ~clk;
 
-    // Instantiate the Accelerator module
-    int_sum_v2 u_accel (
-        .clk         (clk),
-        .rst_n       (rst_n),
-        // Interface to bus_controller (memory requests)
-        .acc_valid   (acc_valid),
-        .acc_addr    (acc_addr),
-        .acc_wdata   (acc_wdata),
-        .acc_wstrb   (acc_wstrb),
-        .acc_rdata   (acc_rdata),
-        .acc_rvalid  (acc_rvalid),
-        .acc_ready   (acc_ready),
-        // Control signals
-        .start       (start),
-        .input_addr  (input_addr),
-        .output_addr (output_addr),
-        .N           (N),
-        .done        (done)
-    );
-
-    // =============================================================
-    // Debugging/Monitoring Logic (Simulation-only constructs)
-    // =============================================================
-    // Monitor important signals continuously
     initial begin
-        $monitor("[%0t] CPU: valid=%b ready=%b rvalid=%b addr=%h wstrb=%h | "
-                 <> "ACC: valid=%b ready=%b rvalid=%b addr=%h wstrb=%h | done=%b",
-                 $time, cpu_valid, cpu_ready, cpu_rvalid, cpu_addr, cpu_wstrb,
-                 acc_valid, acc_ready, acc_rvalid, acc_addr, acc_wstrb, done);
+        $dumpfile("wave_fs.vcd");
+        $dumpvars(0, tb_system_wrapper);
     end
 
-    // Track outstanding read requests for error detection
-    integer outstanding_reads;
-    always @(posedge clk or posedge reset) begin
-        if (reset) begin
-            outstanding_reads <= 0;
-            error_flag <= 0;
+    // Test sequence
+    initial begin
+        // Initialize
+        reset = 1;
+        #20;                // Hold reset for 20ns
+        reset = 0;
+        #10;                // Wait after reset deassertion
+
+        // Step 1: Write test data to memory via CPU interface
+        // Write two 256-bit blocks, each with eight 32-bit integers
+        cpu_write(19'h0, 256'h00000007_00000006_00000005_00000004_00000003_00000002_00000001_00000000, {`FE_STRB_W{1'b1}});
+        cpu_write(19'h1, 256'h0000000F_0000000E_0000000D_0000000C_0000000B_0000000A_00000009_00000008, {`FE_STRB_W{1'b1}});
+
+        // Step 2: Configure accelerator
+        input_addr = 19'h0;    // Start of input data
+        output_addr = 19'h10;  // Start of output data (address 16)
+        N = 32'd2;             // Process 2 blocks
+        #10;
+
+        // Step 3: Start the accelerator
+        start = 1;
+        #10;
+        start = 0;
+
+        // Step 4: Wait for accelerator to complete
+        wait(done == 1);
+        #10;  // Small delay to ensure outputs settle
+
+        // Step 5: Read results from memory
+        cpu_read(19'h10, sum1);
+        $display("Sum 1: %h", sum1[31:0]);
+        cpu_read(19'h11, sum2);
+        $display("Sum 2: %h", sum2[31:0]);
+
+        // Step 6: Verify results
+        // Expected: sum1 = 0+1+2+3+4+5+6+7 = 28, sum2 = 8+9+10+11+12+13+14+15 = 92
+        if (sum1[31:0] == 32'd28 && sum2[31:0] == 32'd92) begin
+            $display("Test passed!");
         end else begin
-            // If a read request is accepted (valid & ready with no write strobes)
-            if (cache_valid && cache_ready && cache_wstrb == {STRB_W{1'b0}}) begin
-                outstanding_reads <= outstanding_reads + 1;
-            end
-            // If a read response is valid (memory returning data)
-            if (cache_rvalid) begin
-                if (outstanding_reads > 0)
-                    outstanding_reads <= outstanding_reads - 1;
-            end
-            // Check for error conditions:
-            // 1. Too many outstanding reads (overflow)
-            if (outstanding_reads > 4) begin
-                $display("ERROR: Outstanding read requests overflow at time %0t", $time);
-                error_flag <= 1'b1;
-            end
-            // 2. Read response with no request (underflow)
-            if (cache_rvalid && outstanding_reads == 0) begin
-                $display("ERROR: Read response with no pending request at time %0t", $time);
-                error_flag <= 1'b1;
-            end
+            $display("Test failed! Expected sum1=28, sum2=92; Got sum1=%d, sum2=%d", sum1[31:0], sum2[31:0]);
         end
+
+        #20;
+        $finish;
     end
 
-    // Log memory transactions for clarity
-    always @(posedge clk) begin
-        // Log CPU transactions
-        if (cpu_valid && cpu_ready) begin
-            if (cpu_wstrb !== {STRB_W{1'b0}}) begin  // write operation
-                $display("CPU WRITE: addr=%h data=%h (strobe %h) at time %0t",
-                         cpu_addr, cpu_wdata, cpu_wstrb, $time);
-            end else begin  // read operation
-                $display("CPU READ REQUEST: addr=%h at time %0t", cpu_addr, $time);
-            end
+    // Task: CPU Write Operation
+    task cpu_write;
+        input [`FE_ADDR_W-1:0] addr;
+        input [`FE_DATA_W-1:0] data;
+        input [`FE_STRB_W-1:0] strb;
+        begin
+            @(posedge clk);
+            cpu_valid <= 1'b1;
+            cpu_addr  <= addr;
+            cpu_wdata <= data;
+            cpu_wstrb <= strb;
+            while (!cpu_ready) @(posedge clk);
+            @(posedge clk);
+            cpu_valid <= 1'b0;
+            cpu_wstrb <= {`FE_STRB_W{1'b0}};
         end
-        if (cpu_rvalid) begin
-            $display("CPU READ RESPONSE: data=%h at time %0t", cpu_rdata, $time);
+    endtask
+
+    // Task: CPU Read Operation
+    task cpu_read;
+        input  [`FE_ADDR_W-1:0] addr;
+        output [`FE_DATA_W-1:0] rdata;
+        begin
+            @(posedge clk);
+            cpu_valid <= 1'b1;
+            cpu_addr  <= addr;
+            cpu_wstrb <= {`FE_STRB_W{1'b0}};  // Read operation (no write strobes)
+            while (!cpu_ready) @(posedge clk);
+            @(posedge clk);
+            cpu_valid <= 1'b0;
+            while (!cpu_rvalid) @(posedge clk);  // Wait for read data
+            rdata = cpu_rdata;
         end
-        // Log Accelerator transactions
-        if (acc_valid && acc_ready) begin
-            if (acc_wstrb !== {STRB_W{1'b0}}) begin  // write
-                $display("ACC WRITE: addr=%h data=%h (strobe %h) at time %0t",
-                         acc_addr, acc_wdata, acc_wstrb, $time);
-            end else begin  // read
-                $display("ACC READ REQUEST: addr=%h at time %0t", acc_addr, $time);
-            end
-        end
-        if (acc_rvalid) begin
-            $display("ACC READ RESPONSE: data=%h at time %0t", acc_rdata, $time);
-        end
-        // Log accelerator completion
-        if (done) begin
-            $display("ACCELERATOR DONE asserted at time %0t (computation complete)", $time);
-        end
-    end
+    endtask
 
 endmodule

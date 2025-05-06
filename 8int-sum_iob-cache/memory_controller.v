@@ -1,30 +1,32 @@
+`include "constants.vh" 
+
 module bus_controller (
     // CPU interface
-    input  wire        cpu_valid,
-    input  wire [18:0] cpu_addr,
-    input  wire [255:0] cpu_wdata,
-    input  wire [31:0] cpu_wstrb,
-    output reg  [255:0] cpu_rdata,
-    output reg         cpu_rvalid,
-    output wire        cpu_ready,
+    input  wire                cpu_valid,
+    input  wire [`FE_ADDR_W-1 :0] cpu_addr,
+    input  wire [`FE_DATA_W-1 :0] cpu_wdata,
+    input  wire [`FE_STRB_W-1 :0] cpu_wstrb,
+    output reg  [`FE_DATA_W-1 :0] cpu_rdata,
+    output reg                 cpu_rvalid,
+    output wire                cpu_ready,
 
     // Accelerator interface
-    input  wire        acc_valid,
-    input  wire [18:0] acc_addr,
-    input  wire [255:0] acc_wdata,
-    input  wire [31:0] acc_wstrb,
-    output reg  [255:0] acc_rdata,
-    output reg         acc_rvalid,
-    output wire        acc_ready,
+    input  wire                acc_valid,
+    input  wire [`FE_ADDR_W-1 :0] acc_addr,
+    input  wire [`FE_DATA_W-1 :0] acc_wdata,
+    input  wire [`FE_STRB_W-1 :0] acc_wstrb,
+    output reg  [`FE_DATA_W-1 :0] acc_rdata,
+    output reg                 acc_rvalid,
+    output wire                acc_ready,
 
     // Cache interface
-    output wire        cache_valid,
-    output wire [18:0] cache_addr,
-    output wire [255:0] cache_wdata,
-    output wire [31:0] cache_wstrb,
-    input  wire [255:0] cache_rdata,
-    input  wire        cache_rvalid,
-    input  wire        cache_ready,
+    output wire                cache_valid,
+    output wire [`FE_ADDR_W-1 :0] cache_addr,
+    output wire [`FE_DATA_W-1 :0] cache_wdata,
+    output wire [`FE_STRB_W-1 :0] cache_wstrb,
+    input  wire [`FE_DATA_W-1 :0] cache_rdata,
+    input  wire                cache_rvalid,
+    input  wire                cache_ready,
 
     // Clock and reset
     input  wire        clk_i,
@@ -33,7 +35,7 @@ module bus_controller (
 
     // Round-robin arbitration
     reg last_served; // 0: CPU, 1: accelerator
-    wire [1:0] select;
+    reg [1:0] select; // Changed from wire to reg
     always @* begin
         if (last_served == 0) begin // Last served was CPU, prefer accelerator
             if (acc_valid) select = 1;
@@ -48,9 +50,9 @@ module bus_controller (
 
     // Drive cache inputs based on selected requester
     assign cache_valid = (select == 0) ? cpu_valid : (select == 1) ? acc_valid : 1'b0;
-    assign cache_addr  = (select == 0) ? cpu_addr  : (select == 1) ? acc_addr  : 19'b0;
-    assign cache_wdata = (select == 0) ? cpu_wdata : (select == 1) ? acc_wdata : 256'b0;
-    assign cache_wstrb = (select == 0) ? cpu_wstrb : (select == 1) ? acc_wstrb : 32'b0;
+    assign cache_addr  = (select == 0) ? cpu_addr  : (select == 1) ? acc_addr  : `FE_ADDR_W-1'b0;
+    assign cache_wdata = (select == 0) ? cpu_wdata : (select == 1) ? acc_wdata : `FE_DATA_W-1'b0;
+    assign cache_wstrb = (select == 0) ? cpu_wstrb : (select == 1) ? acc_wstrb : `FE_STRB_W-1'b0;
 
     // Ready signals back to requesters
     assign cpu_ready = (select == 0) && cache_ready;

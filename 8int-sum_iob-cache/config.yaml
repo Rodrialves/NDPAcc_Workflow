@@ -1,0 +1,86 @@
+# Define simulation version (change manually for each iteration)
+version: "v0.1"
+
+# IOb-cache source locations
+cache_location: "../iob_cache_V0.7/"
+sum_location: "../8int-sum/"
+sim_location: "../iob_cache_V0.7/hardware/simulation/src/"
+src_location: "../iob_cache_V0.7/hardware/src/"
+
+
+# Testbench top module
+wave_out_top_module: "wave_top"
+sim_out_top_module: "tb_top_wrapper.v"
+log_out_top_module: "log_top.txt"
+
+tb_files_top_module:
+  - "full_system_wrapper.v"
+  - "full_system_wrapper_tb.v"
+  - "memory_wrapper.v"
+
+# Testbench memory module loaded
+wave_out_mem_loaded_module: "wave_loaded_mem"
+sim_out_mem_loaded_module: "tb_loaded_mem_wrapper.v"
+log_out_mem_loaded_module: "log_loaded_mem.txt"
+
+tb_files_mem_loaded_module:
+  - "memory_wrapper_loaded_tb.v"
+  - "memory_wrapper.v"
+
+# Testbench memory module
+wave_out_mem_module: "wave_mem"
+sim_out_mem_module: "tb_mem_wrapper.v"
+log_out_mem_module: "log_mem.txt"
+
+tb_files_mem_module:
+  - "memory_wrapper_tb.v"
+  - "memory_wrapper.v"
+
+# Testbench accelerator module
+wave_out_acc_module: "wave_acc"
+sim_out_acc_module: "tb_acc_wrapper.v"
+log_out_acc_module: "log_acc.txt"
+
+tb_files_acc_module:
+  - "../8int-sum/8int-sum_v2_tb.v"
+
+# Testbench ram module
+wave_out_ram_module: "wave_ram"
+sim_out_ram_module: "tb_ram_wrapper.v"
+log_out_ram_module: "log_ram.txt"
+
+tb_files_ram_module:
+  - "../vector_ram/vec_ram_tb.v"
+
+# Accelerator files list
+acc_files:
+  - "../8int-sum/8int-sum_v2.v"
+
+# Ram files list
+ram_files:
+  - "../vector_ram/vec_ram.v"
+
+# Controller files list
+ctrl_files:
+  - "memory_controller.v"
+
+# IOb-cache files list
+IoB_files:
+  - "../iob_cache_V0.7/hardware/src/iob_cache_iob.v"
+  - "../iob_cache_V0.7/hardware/src/iob_ram_sp_be.v"
+  - "../iob_cache_V0.7/hardware/src/iob_reg_re.v"
+  - "../iob_cache_V0.7/hardware/src/iob_cache_back_end.v"
+  - "../iob_cache_V0.7/hardware/src/iob_cache_front_end.v"
+  - "../iob_cache_V0.7/hardware/src/iob_cache_memory.v"
+  - "../iob_cache_V0.7/hardware/src/iob_reg_r.v"
+  - "../iob_cache_V0.7/hardware/src/iob_cache_onehot_to_bin.v"
+  - "../iob_cache_V0.7/hardware/src/iob_cache_read_channel.v"
+  - "../iob_cache_V0.7/hardware/src/iob_cache_replacement_policy.v"
+  - "../iob_cache_V0.7/hardware/src/iob_cache_write_channel.v"
+  - "../iob_cache_V0.7/hardware/src/iob_fifo_sync.v"
+  - "../iob_cache_V0.7/hardware/src/iob_ram_sp.v"
+  - "../iob_cache_V0.7/hardware/src/iob_ram_t2p.v"
+  - "../iob_cache_V0.7/hardware/src/iob_reg.v"
+  - "../iob_cache_V0.7/hardware/src/iob_asym_converter.v"
+  - "../iob_cache_V0.7/hardware/src/iob_counter.v"
+  - "../iob_cache_V0.7/hardware/src/iob_regfile_sp.v"

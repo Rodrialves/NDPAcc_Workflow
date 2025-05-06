@@ -2,12 +2,12 @@ module wallace_tree_sum
    #(	parameter DATA_WIDTH = 256,
 	parameter OUTPUT_WIDTH = 32,
 	parameter NUM = 8)
-   (input clk,
-    input rst_n,
-    input valid_in,
-    input [DATA_WIDTH-1:0] data_in, // 8 integers * 32-bit each
-    output reg valid_out,
-    output reg [OUTPUT_WIDTH-1:0] sum_out  // Output sum (extra bits for overflow)
+   (input                            clk,
+    input                            rst_n,
+    input                            valid_in,
+    input           [DATA_WIDTH-1:0] data_in, // 8 integers * 32-bit each
+    output reg                       valid_out,
+    output reg    [OUTPUT_WIDTH-1:0] sum_out  // Output sum (extra bits for overflow)
 );
 
     // Stage 1: Pairwise sums (reducing 8 inputs to 4)

@@ -1,14 +1,16 @@
 `timescale 1ns/1ps
 
+`include "constants.vh"
+
 module tb_native_ram;
 
-    // Parameters
+    // Signals
     reg clk_i;
     reg en_i;
-    reg [31:0] we_i;     // 32-bit write enable
-    reg [23:0] addr_i;    // 10-bit address (1024 locations)
-    reg [255:0] d_i;     // 256-bit input data
-    wire [255:0] d_o;    // 256-bit output data
+    reg [`BE_STRB_W-1 :0] we_i;     // 8-bit write enable
+    reg [`BE_ADDR_W-1 :0] addr_i;  // 24-bit address
+    reg [`BE_DATA_W-1 :0] d_i;     // 64-bit input data
+    wire [`BE_DATA_W-1 :0] d_o;    // 64-bit output data
 
     // Instantiate RAM
     vec_ram uut (
@@ -25,6 +27,9 @@ module tb_native_ram;
 
     // Test procedure
     initial begin
+        $dumpfile("wave_ram.vcd"); // Set the VCD file name
+        $dumpvars(0, tb_native_ram); // Dump all signals in the testbench
+
         // Initialize signals
         clk_i = 0;
         en_i  = 0;
@@ -37,47 +42,48 @@ module tb_native_ram;
         // Enable memory operations
         en_i = 1;
 
-        // Test Case 1: Full-word write
-        addr_i = 24'h000001;  // Write to address 1
-        d_i = 256'hDEADBEEFCAFEBABE112233445566778899AABBCCDDEEFF0011223344556677;
-        we_i = 32'hFFFFFFFF; // Enable all 32 bytes
+        // Test Case 1: Full-word write to address 0
+        addr_i = 24'h000000;
+        d_i = 64'h1122334455667788;
+        we_i = 8'hFF; // Enable all 8 bytes
         #10;
+        we_i = 8'h00;
+        #10;
+        $display("Read from addr 0: %h", d_o);
+        if (d_o !== 64'h1122334455667788)
+            $display("ERROR: Full word read mismatch at addr 0");
 
-        // Test Case 2: Read back full-word
-        we_i = 32'h00000000; // Disable writing
+        // Test Case 2: Partial write to address 4
+        addr_i = 24'h000004;
+        d_i = 64'hAABBCCDDEEFF0011;
+        we_i = 8'h0F; // Enable lower 4 bytes
         #10;
-        $display("Read Full Word: %h", d_o);
-        if (d_o !== 256'hDEADBEEFCAFEBABE112233445566778899AABBCCDDEEFF0011223344556677)
-            $display("ERROR: Full word read mismatch!");
+        we_i = 8'h00;
+        #10;
+        $display("Read from addr 4: %h", d_o);
+        if (d_o[31:0] !== 32'hEEFF0011)
+            $display("ERROR: Partial write mismatch at addr 4");
 
-        // Test Case 3: Partial write (Modify only lower 8 bytes)
-        addr_i = 24'h000002;  // Write to address 2
-        d_i = 256'h00000000000000000000000000000000_0000000000000000_1122334455667788;
-        we_i = 32'h000000FF; // Enable only lower 8 bytes
+        // Test Case 3: Full-word write to address 8
+        addr_i = 24'h000008;
+        d_i = 64'h2233445566778899;
+        we_i = 8'hFF;
         #10;
+        we_i = 8'h00;
+        #10;
+        $display("Read from addr 8: %h", d_o);
+        if (d_o !== 64'h2233445566778899)
+            $display("ERROR: Full word read mismatch at addr 8");
 
-        // Read back and verify
-        we_i = 32'h00000000; // Disable writing
+        // Test Case 4: Overlapping read from address 2
+        addr_i = 24'h000002;
         #10;
-        $display("Read Partial Word: %h", d_o);
-        if (d_o[63:0] !== 64'h1122334455667788)
-            $display("ERROR: Partial write mismatch!");
-
-        // Test Case 4: Another full-word write
-        addr_i = 24'h000003;
-        d_i = 256'hAABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899;
-        we_i = 32'hFFFFFFFF; // Full-word write
-        #10;
-
-        // Read back
-        we_i = 32'h00000000;
-        #10;
-        $display("Read Full Word 2: %h", d_o);
-        if (d_o !== 256'hAABBCCDDEEFF00112233445566778899AABBCCDDEEFF00112233445566778899)
-            $display("ERROR: Full word read mismatch!");
+        $display("Read from addr 2: %h", d_o);
+        if (d_o !== 64'h8899EEFF00115566)
+            $display("ERROR: Overlapping read mismatch at addr 2");
 
         $display("Test completed successfully.");
-        $stop;
+        $finish;
     end
 
 endmodule

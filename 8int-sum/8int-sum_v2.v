@@ -1,7 +1,6 @@
+`include "constants.vh"
+
 module int_sum_v2
-    #(parameter DATA_WIDTH = 256,
-      parameter OUTPUT_WIDTH = 32,
-      parameter NUM = 8)
     (
         // Clock and reset
         input clk,
@@ -9,29 +8,29 @@ module int_sum_v2
 
         // Interface to bus_controller
         output reg acc_valid,              // Request valid
-        output reg [18:0] acc_addr,        // Address for read/write
-        output reg [255:0] acc_wdata,      // Write data
-        output reg [31:0] acc_wstrb,       // Write strobe
-        input wire [255:0] acc_rdata,      // Read data
+        output reg [`FE_ADDR_W-1 :0] acc_addr,        // Address for read/write
+        output reg [`FE_DATA_W-1 :0] acc_wdata,      // Write data
+        output reg [`FE_STRB_W-1 :0] acc_wstrb,       // Write strobe
+        input wire [`FE_DATA_W-1 :0] acc_rdata,      // Read data
         input wire acc_rvalid,             // Read data valid
         input wire acc_ready,              // Request accepted
 
         // Control signals (memory-mapped registers)
         input wire start,                  // Start computation
-        input wire [18:0] input_addr,      // Input data starting address
-        input wire [18:0] output_addr,     // Output data starting address
+        input wire [`FE_ADDR_W-1 :0] input_addr,      // Input data starting address
+        input wire [`FE_ADDR_W-1 :0] output_addr,     // Output data starting address
         input wire [31:0] N,               // Number of 256-bit blocks
         output reg done                    // Computation complete
     );
 
     // Internal registers
-    reg [255:0] input_buffer [0:3];        // Buffer for input data
+    reg [`FE_DATA_W-1 :0] input_buffer [0:3];        // Buffer for input data
     reg [31:0] output_buffer [0:3];        // Buffer for output sums
     reg [1:0] input_head, input_tail;      // Buffer pointers
     reg [1:0] output_head, output_tail;
     reg [31:0] count;                      // Processed block counter
-    reg [18:0] current_input_addr;         // Current read address
-    reg [18:0] current_output_addr;        // Current write address
+    reg [`FE_ADDR_W-1 :0] current_input_addr;         // Current read address
+    reg [`FE_ADDR_W-1 :0] current_output_addr;        // Current write address
 
     // Pipeline registers
     reg [OUTPUT_WIDTH-1:0] sum_stage1 [3:0]; // Stage 1: 8 -> 4
@@ -207,7 +206,7 @@ module int_sum_v2
     // Remove original output assignments since sum_out is now buffered
     // Debugging statements (optional)
     always @(posedge clk) begin
-        $display("State: %d, Count: %d", state, count);
+        //$display("State: %d, Count: %d", state, count);
         // $display("Stage 1: %d %d %d %d", sum_stage1[0], sum_stage1[1], sum_stage1[2], sum_stage1[3]);
         // $display("Stage 2: %d %d", sum_stage2[0], sum_stage2[1]);
         // $display("Final Sum: %d", final_sum);

@@ -1,14 +1,14 @@
 `timescale 1ns / 1ps
 
-`include "memory.vh"
+`include "constants.vh"
 
 module memory_wrapper (
     // Front-end interface (IOb native slave)
     input  [                             1-1:0] iob_valid_i,
-    input  [                   `IOB_ADDR_W-1:0] iob_addr_i,
-    input  [                  `IOB_WDATA_W-1:0] iob_wdata_i,
-    input  [                `IOB_WDATA_W/8-1:0] iob_wstrb_i,
-    output [                  `IOB_RDATA_W-1:0] iob_rdata_o,
+    input  [                    `FE_ADDR_W-1:0] iob_addr_i,
+    input  [                    `FE_DATA_W-1:0] iob_wdata_i,
+    input  [                    `FE_STRB_W-1:0] iob_wstrb_i,
+    output [                    `FE_DATA_W-1:0] iob_rdata_o,
     output [                             1-1:0] iob_rvalid_o,
     output [                             1-1:0] iob_ready_o,
 
@@ -23,16 +23,16 @@ module memory_wrapper (
     input [1-1:0] arst_i
 );
 
-     wire                     be_valid;
-     wire [   `BE_ADDR_W-1:0] be_addr;
-     wire [  `BE_WDATA_W-1:0] be_wdata;
-     wire [`BE_WDATA_W/8-1:0] be_wstrb;
-     wire [  `BE_RDATA_W-1:0] be_rdata;
-     wire                     be_rvalid;
-     wire                     be_ready;
-     wire cke_i;
+    wire                     be_valid;
+    wire [   `BE_ADDR_W-1:0] be_addr;
+    wire [   `BE_DATA_W-1:0] be_wdata;
+    wire [   `BE_STRB_W-1:0] be_wstrb;
+    wire [   `BE_DATA_W-1:0] be_rdata;
+    wire                     be_rvalid;
+    wire                     be_ready;
+    wire cke_i;
     
-     assign cke_i = 1'b1;
+    assign cke_i = 1'b1;
 
 
     // Instantiate IOb-Cache Wrapper
